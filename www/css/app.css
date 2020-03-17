@@ -1,0 +1,20 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Your app custom styles here */
+.contador {
+	height: 100%;
+}
+
+.col-contador {
+	height: 7.14%;
+}
+.col-33, .col-50 {
+	text-align: center;
+	border-style: solid;
+	border-width: 0.5px;
+	height: 100%;
+	
+}
