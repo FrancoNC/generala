@@ -22,16 +22,26 @@ var app = new Framework7({
     iosOverlaysWebView: true,
     androidOverlaysWebView: false,
   },
-  
+
 
 });
 
 
 var mainView = app.views.create('.view-main');
 
+var nomjug1 = "";
+var nomjug2 = "";
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
+
+    $$('#inicio').on('click',function () {
+      nomjug1 = $$('#j1').val();
+      nomjug2 = $$('#j2').val();
+    })
+
+
 });
 
 // Option 1. Using one 'page:init' handler for all pages
@@ -44,5 +54,7 @@ $$(document).on('page:init', function (e) {
 $$(document).on('page:init', '.page[data-name="about"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
-    alert('Hello');
+    $$('jug1').text(nomjug1);
+    $$('jug1').text(nomjug1);
+
 })
