@@ -33,9 +33,12 @@ var nomJug1 = "";
 var nomJug2 = "";
 var total1 = 0;
 var total2 = 0;
+var ident = "";
+var dado = 0;
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
+
 
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
@@ -57,6 +60,73 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
     console.log(e);
     $$('#jug1').text(nomjug1);
     $$('#jug2').text(nomjug2);
+
+///////////////////////////////// onclick de asignacion dados
+
+$$('#j1_1').on('click', function () {asignar(1, 1);});
+$$('#j1_2').on('click', function () {asignar(1, 2);});
+$$('#j1_3').on('click', function () {asignar(1, 3);});
+$$('#j1_4').on('click', function () {asignar(1, 4);});
+$$('#j1_5').on('click', function () {asignar(1, 5);});
+$$('#j1_6').on('click', function () {asignar(1, 6);});
+
+$$('#j2_1').on('click', function () {asignar(2, 1);});
+$$('#j2_2').on('click', function () {asignar(2, 2);});
+$$('#j2_3').on('click', function () {asignar(2, 3);});
+$$('#j2_4').on('click', function () {asignar(2, 4);});
+$$('#j2_5').on('click', function () {asignar(2, 5);});
+$$('#j2_6').on('click', function () {asignar(2, 6);});
+
+
+function asignar(i, j){
+  ident = "j"+i+"_"+j;
+  dado = j;
+};
+
+/////////////////////////////////
+$$('.open-vertical').on('click', function () {
+  app.dialog.create({
+    title: 'Cantidad de dados',
+    //text: 'Dialog with vertical buttons',
+  buttons: [
+    {
+      text: '1 dado',
+    },
+    {
+      text: '2 dados',
+    },
+    {
+      text: '3 dados',
+    },
+    {
+      text: '4 dados',
+    },
+    {
+      text: '5 dados',
+    },
+    {
+      text: 'tachar',
+    },
+    {
+      text: 'Cancelar',
+    },
+  ],
+  onClick: function(dialog, index) { tocar("", index) },
+  verticalButtons: true,
+  }).open();
+});
+/////////////////////////////////
+function tocar(iden, index){
+    console.log(ident + " / "+  index);
+    if(index < 5){
+        $$("#"+ident).text((index+1)*dado);
+    }
+    else if(index == 5){
+        $$("#"+ident).text("X");
+    }
+  }
+/////////////////////////////////
+/////////////////////////////////
 /*
     $$('#volver').on('click', function () {
       nomjug1 = "";
@@ -70,6 +140,8 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
       }
     })
 */
+/////////////////////////////////
+/////////////////////////////////
     $$('#limpiar').on('click', function () {
       for(var j = 1; j < 3; j++){
         for (var i = 1; i < 12; i++) {
@@ -88,53 +160,8 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
       total2 += n;
       $$('#t2').text(total2);
     }
+/////////////////////////////////
 
-/////////////////////////////////
-$$('#j1_1').on('click', function () {
-  app.dialog.create({
-    title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
-  buttons: [
-    {
-      text: '1 dado',
-      onClick: tocar("j1_1", "1"),
-    },
-    {
-      text: '2 dados',
-      onClick: tocar("j1_1", "2"),
-    },
-    {
-      text: '3 dados',
-      onClick: tocar("j1_1", "3"),
-    },
-    {
-      text: '4 dados',
-      onClick: tocar("j1_1", "4"),
-    },
-    {
-      text: '5 dados',
-      onClick: tocar("j1_1", "5"),
-    },
-    {
-      text: 'tachar',
-      onClick: tocar("j1_1", "X"),
-    },
-    {
-      text: 'Cancelar',
-    },
-  ],
-  verticalButtons: true,
-  }).open();
-});
-/////////////////////////////////
-function tocar(iden, index){
-  if(index == 1){
-    $$('#'+iden).text(index);
-  }
-  else if(index == 2){
-  $$('#'+iden).text(index);
-}
-}
 
 
 })
