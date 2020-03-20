@@ -33,7 +33,6 @@ var nomJug1 = "";
 var nomJug2 = "";
 var valores1 = [0,0,0,0,0,0,0,0,0,0,0];
 var valores2 = [0,0,0,0,0,0,0,0,0,0,0];
-var juegos = [0]
 var total1 = 0;
 var total2 = 0;
 var ident = "";
@@ -147,6 +146,7 @@ function tocar1(index){
       array[dado-1] = puntos;
       $$("#"+ident).text("X");
   }
+  sumar();
 }
 //////////////////////////////////BOTONES JUEGOS
 $$('.open-vertical2').on('click', function () {
@@ -176,6 +176,7 @@ $$('.open-vertical2').on('click', function () {
     if (index == 1) serv = 5;
     if (index == 1 && dado == 10) ganarGenerala();
     if (index != 2 && index != 3) asignarValor(dado, serv);
+    sumar();
   }
 /////////////////////////////////
 function ganarGenerala(){
@@ -213,7 +214,12 @@ function asignarValor(v, k){
   }
 }
 /////////////////////////////////
-
+sumar(){
+  for (var i = 0; i < 11; i++) {
+    total1 += valores1[i];
+    total2 += valores2[i];
+  }
+}
 
 /*
 /////////////////////////////////
