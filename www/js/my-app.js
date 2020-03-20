@@ -49,6 +49,10 @@ $$(document).on('deviceready', function() {
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
       nomjug2 = $$('#j2').val();
+      for (var i = 0; i < 11; i++) {
+        valores1[i] = 0;
+        valores2[i] = 0;
+      }
     })
 
 
@@ -66,6 +70,8 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
     console.log(e);
     $$('#jug1').text(nomjug1);
     $$('#jug2').text(nomjug2);
+
+
 
 ///////////////////////////////// onclick de asignacion dados
 
@@ -190,6 +196,7 @@ function tachar(){
   if (jugador == 1) array = valores1;
   if (jugador == 2) array = valores2;
   array[dado-1] = 0;
+  $$("#"+ident).text("X");
 }
 
 /////////////////////////////////
