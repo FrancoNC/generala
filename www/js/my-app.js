@@ -31,14 +31,21 @@ var mainView = app.views.create('.view-main');
 
 var nomJug1 = "";
 var nomJug2 = "";
+var valores1 = [0,0,0,0,0,0,0,0,0,0,0];
+var valores2 = [0,0,0,0,0,0,0,0,0,0,0];
+var juegos = [0]
 var total1 = 0;
 var total2 = 0;
 var ident = "";
 var dado = 0;
+var jugador = 0;
+
+
+
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
-
 
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
@@ -69,6 +76,11 @@ $$('#j1_3').on('click', function () {asignar(1, 3);});
 $$('#j1_4').on('click', function () {asignar(1, 4);});
 $$('#j1_5').on('click', function () {asignar(1, 5);});
 $$('#j1_6').on('click', function () {asignar(1, 6);});
+$$('#j1_7').on('click', function () {asignar(1, 7);});
+$$('#j1_8').on('click', function () {asignar(1, 8);});
+$$('#j1_9').on('click', function () {asignar(1, 9);});
+$$('#j1_10').on('click', function () {asignar(1,10);});
+$$('#j1_11').on('click', function () {asignar(1,11);});
 
 $$('#j2_1').on('click', function () {asignar(2, 1);});
 $$('#j2_2').on('click', function () {asignar(2, 2);});
@@ -76,18 +88,23 @@ $$('#j2_3').on('click', function () {asignar(2, 3);});
 $$('#j2_4').on('click', function () {asignar(2, 4);});
 $$('#j2_5').on('click', function () {asignar(2, 5);});
 $$('#j2_6').on('click', function () {asignar(2, 6);});
+$$('#j2_7').on('click', function () {asignar(2, 7);});
+$$('#j2_8').on('click', function () {asignar(2, 8);});
+$$('#j2_9').on('click', function () {asignar(2, 9);});
+$$('#j2_10').on('click', function () {asignar(2,10);});
+$$('#j2_11').on('click', function () {asignar(2,11);});
 
 
 function asignar(i, j){
-  ident = "j"+i+"_"+j;
+  jugador = i;
   dado = j;
+  ident = "j"+i+"_"+j;
 };
 
-/////////////////////////////////
-$$('.open-vertical').on('click', function () {
+/////////////////////////////////BOTONES DADOS
+$$('.open-vertical1').on('click', function () {
   app.dialog.create({
     title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
   buttons: [
     {
       text: '1 dado',
@@ -111,36 +128,94 @@ $$('.open-vertical').on('click', function () {
       text: 'Cancelar',
     },
   ],
-  onClick: function(dialog, index) { tocar("", index) },
+  onClick: function(dialog, index) { tocar1(index) },
   verticalButtons: true,
   }).open();
 });
 /////////////////////////////////
-function tocar(iden, index){
-    console.log(ident + " / "+  index);
-    if(index < 5){
-        $$("#"+ident).text((index+1)*dado);
-    }
-    else if(index == 5){
-        $$("#"+ident).text("X");
-    }
+function tocar1(index){
+  var puntos = 0;
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  if(index < 5){
+      puntos = (index+1)*dado;
+      array[dado-1] = puntos;
+      $$("#"+ident).text(puntos);
+  }
+  else if(index == 5){
+      array[dado-1] = puntos;
+      $$("#"+ident).text("X");
+  }
+}
+//////////////////////////////////BOTONES JUEGOS
+$$('.open-vertical2').on('click', function () {
+  app.dialog.create({
+    title: '¿Armada o servida?',
+  buttons: [
+    {
+      text: 'Armada',
+    },
+    {
+      text: 'Servida',
+    },
+    {
+      text: 'Tachar',
+    },
+    {
+      text: 'Cancelar',
+    },
+  ],
+  onClick: function(dialog, index) { tocar2(index) },
+  verticalButtons: true,
+  }).open();
+});
+/////////////////////////////////
+  function tocar2(index){
+    var serv = 0;
+    if (index == 1) serv = 5;
+    if (index == 1 && dado == 10) ganarGenerala();
+    if (index != 2 && index != 3) asignarValor(dado, serv);
   }
 /////////////////////////////////
+function ganarGenerala(){
+  if (jugador == 1) alert("GANÓ 1");
+  if (jugador == 2) alert("GANÓ 2");
+}
+
 /////////////////////////////////
+function asignarValor(v, k){
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  switch (v) {
+    case 7: //escalera
+      array[6] = 20 + k;
+      $$("#"+ident).text(20+k);
+      break;
+    case 8://full
+      array[7] = 30 + k;
+      $$("#"+ident).text(30+k);
+      break;
+    case 9://poker
+      array[8] = 40 + k;
+      $$("#"+ident).text(40+k);
+      break;
+    case 10://generala
+      array[9] = 50;
+      $$("#"+ident).text(50);
+      break;
+    case 11://doble generala
+      array[10] = 100;
+      $$("#"+ident).text(100);
+      break;
+    default:
+  }
+}
+/////////////////////////////////
+
+
 /*
-    $$('#volver').on('click', function () {
-      nomjug1 = "";
-      nomjug2 = "";
-      $$('#j1').val("");
-      $$('#j2').val("");
-      for(var j = 0; j < 2; j++){
-        for (var i = 0; i < ; i++) {
-          $$('#'+j+i).text("-");
-        }
-      }
-    })
-*/
-/////////////////////////////////
 /////////////////////////////////
     $$('#limpiar').on('click', function () {
       for(var j = 1; j < 3; j++){
@@ -162,6 +237,20 @@ function tocar(iden, index){
     }
 /////////////////////////////////
 
-
+/////////////////////////////////
+/*
+    $$('#volver').on('click', function () {
+      nomjug1 = "";
+      nomjug2 = "";
+      $$('#j1').val("");
+      $$('#j2').val("");
+      for(var j = 0; j < 2; j++){
+        for (var i = 0; i < ; i++) {
+          $$('#'+j+i).text("-");
+        }
+      }
+    })
+*/
+/////////////////////////////////
 
 })
