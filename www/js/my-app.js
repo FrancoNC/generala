@@ -173,6 +173,7 @@ $$('.open-vertical2').on('click', function () {
 /////////////////////////////////
   function tocar2(index){
     var serv = 0;
+    if (index == 2) tachar();
     if (index == 1) serv = 5;
     if (index == 1 && dado == 10) ganarGenerala();
     if (index != 2 && index != 3) asignarValor(dado, serv);
@@ -182,6 +183,13 @@ $$('.open-vertical2').on('click', function () {
 function ganarGenerala(){
   if (jugador == 1) alert("GANÓ 1");
   if (jugador == 2) alert("GANÓ 2");
+}
+/////////////////////////////////
+function tachar(){
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  array[dado-1] = 0;
 }
 
 /////////////////////////////////
@@ -214,11 +222,15 @@ function asignarValor(v, k){
   }
 }
 /////////////////////////////////
-sumar(){
+function sumar(){
+  total1 = 0;
+  total2 = 0;
   for (var i = 0; i < 11; i++) {
     total1 += valores1[i];
     total2 += valores2[i];
   }
+  $$("#t1").text(total1);
+  $$("#t2").text(total2);
 }
 
 /*
