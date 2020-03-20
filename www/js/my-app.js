@@ -215,7 +215,6 @@ function tocar1(iden, index){
         tot1[posicion]=puntos;
         $$("#"+ident).text("X");
         total()
-        total(index,puntos);
     }
   }
 /////////////////////////////////
@@ -224,68 +223,68 @@ function tocar2(iden, index){
   console.log(game)
   if(game=="escalera"){
     if(index==0){
-      posicion=6;
       puntos=20;
+      tot1[posicion]=puntos;
       $$("#"+ident).text(20);
       total();
     }
     else{
       if(index==1){
-        posicion=6;
         puntos=25;
+        tot1[posicion]=puntos;
         $$("#"+ident).text(25);
         total();
       }
       else{
         if(index==2){
-          posicion=6;
           puntos=0;
+          tot1[posicion]=puntos;
           $$("#"+ident).text("X");
         }
       }
     }
   } else{
     if(game=="full"){
-      posicion=7;
       if(index==0){
         puntos=25;
+        tot1[posicion]=puntos;
         $$("#"+ident).text(25);
         total();
       }
       else{
         if(index==1){
-          posicion=7;
           puntos=30;
+          tot1[posicion]=puntos;
           $$("#"+ident).text(30);
           total();
         }
         else{
           if(index==2){
-            posicion=7;
             puntos=0;
+            tot1[posicion]=puntos;
             $$("#"+ident).text("X");
           }
         }
       }
     } else{
       if(game=="poker"){
-        posicion=8;
         if(index==0){
           puntos=40;
+          tot1[posicion]=puntos;
           $$("#"+ident).text(40);
           total();
         }
         else{
           if(index==1){
-            posicion=8;
             puntos=45;
+            tot1[posicion]=puntos;
             $$("#"+ident).text(45);
             total();
           }
           else{
             if(index==2){
-              posicion=8;
               puntos=0;
+              tot1[posicion]=puntos;
               $$("#"+ident).text("X");
             }
           }
@@ -297,20 +296,19 @@ function tocar2(iden, index){
 /////////////////////////////////
 function tocar3(iden, index){
   if(index==0){
-    posicion=9;
     puntos=50;
+    tot1[posicion]=puntos;
     $$("#"+ident).text(50);
     total();
   } else{
     if(index==1){
-      posicion=9;
       tot="GG";
       $$("#"+ident).text("GG");
       total();
     } else{
       if(index==2){
-        posicion=9;
         puntos=0;
+        tot1[posicion]=puntos;
         $$("#"+ident).text("X");
       } 
     }
@@ -319,14 +317,14 @@ function tocar3(iden, index){
 /////////////////////////////////
 function tocar4(iden, index){
   if(index==0){
-    posicion=10;
     puntos=60;
+    tot1[posicion]=puntos;
     $$("#"+ident).text(60);
     total();
   }else{
     if(index==1){
-      posicion=10;
       puntos=0;
+      tot1[posicion]=puntos;
       $$("#"+ident).text("X");
     }
   }
@@ -343,14 +341,32 @@ function tocar4(iden, index){
       }
       $$('#t1').text("0");
       $$('#t2').text("0");
+      resultado1=0;
+      resultado2=0;
+      tot1=[];
+      tot2=[];
     })
 
 /////////////////////////////////
 function total(){
-  resultado1=0;
-  for(var i=0;i<=tot1.length;i++){
-    resultado1=resultado1+parseInt(tot1[i]);
+  if(jug==1){
+    resultado1=0;
+    for(var i=0;i<tot1.length;i++){
+      if(tot1[i]>=0){
+        resultado1=resultado1+parseInt(tot1[i]);
+      }
+    }
+    $$('#t1').text(resultado1);
+  } else {
+    if(jug==2){
+      resultado2=0;
+      for(var i=0;i<tot2.length;i++){
+        if(tot1[i]>=0){
+          resultado2=resultado2+parseInt(tot2[i]);
+        }
+      }
+      $$('#t2').text(resultado2);
+    }
   }
-  $$('#t1').text(resultado1);
 }
 })
