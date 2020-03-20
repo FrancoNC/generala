@@ -1,34 +1,22 @@
 var $$ = Dom7;
-
 var app = new Framework7({
-  root: '#app', // App root element
-
-  id: 'io.framework7.myapp', // App bundle ID
-  name: 'My App', // App name
-  theme: 'auto', // Automatic theme detection
-  // App root data
-  // App root methods
+  root: '#app',
+  id: 'io.framework7.myapp',
+  name: 'My App',
+  theme: 'auto',
   methods: {
     helloWorld: function () {
       app.dialog.alert('Hello World!');
     },
   },
-  // App routes
   routes: routes,
-
-
-  // Cordova Statusbar settings
   statusbar: {
     iosOverlaysWebView: true,
     androidOverlaysWebView: false,
   },
-
-
 });
-
-
 var mainView = app.views.create('.view-main');
-
+///////////////////////VARIABLES GLOBALES:
 var nomJug1 = "";
 var nomJug2 = "";
 var valores1 = [0,0,0,0,0,0,0,0,0,0,0];
@@ -38,14 +26,8 @@ var total2 = 0;
 var ident = "";
 var dado = 0;
 var jugador = 0;
-
-
-
-
-// Handle Cordova Device Ready Event
+/////////////////////////////////////////
 $$(document).on('deviceready', function() {
-    console.log("Device is ready!");
-
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
       nomjug2 = $$('#j2').val();
@@ -54,27 +36,12 @@ $$(document).on('deviceready', function() {
         valores2[i] = 0;
       }
     })
-
-
 });
-
-// Option 1. Using one 'page:init' handler for all pages
-$$(document).on('page:init', function (e) {
-    // Do something here when page loaded and initialized
-    console.log(e);
-})
-
-// Option 2. Using live 'page:init' event handlers for each page
+/////////////////////////////////////////
 $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
-    // Do something here when page with data-name="about" attribute loaded and initialized
-    console.log(e);
     $$('#jug1').text(nomjug1);
     $$('#jug2').text(nomjug2);
-
-
-
-///////////////////////////////// onclick de asignacion dados
-
+///////////////////////////////// onclick de asignacion de ubicacion:
 $$('#j1_1').on('click', function () {asignar(1, 1);});
 $$('#j1_2').on('click', function () {asignar(1, 2);});
 $$('#j1_3').on('click', function () {asignar(1, 3);});
@@ -98,46 +65,22 @@ $$('#j2_8').on('click', function () {asignar(2, 8);});
 $$('#j2_9').on('click', function () {asignar(2, 9);});
 $$('#j2_10').on('click', function () {asignar(2,10);});
 $$('#j2_11').on('click', function () {asignar(2,11);});
-
-
+//////////////////////////////////////////////////////////////////
 function asignar(i, j){
   jugador = i;
   dado = j;
   ident = "j"+i+"_"+j;
 };
-
 /////////////////////////////////BOTONES DADOS
 $$('.open-vertical1').on('click', function () {
   app.dialog.create({
     title: 'Cantidad de dados',
-  buttons: [
-    {
-      text: '1 dado',
-    },
-    {
-      text: '2 dados',
-    },
-    {
-      text: '3 dados',
-    },
-    {
-      text: '4 dados',
-    },
-    {
-      text: '5 dados',
-    },
-    {
-      text: 'tachar',
-    },
-    {
-      text: 'Cancelar',
-    },
-  ],
-  onClick: function(dialog, index) { tocar1(index) },
-  verticalButtons: true,
+    buttons: [{text: '1 dado',},{text: '2 dados',},{text: '3 dados',},{text: '4 dados',},{text: '5 dados',},{text: 'tachar',},{text: 'Cancelar',},],
+    onClick: function(dialog, index) { tocar1(index) },
+    verticalButtons: true,
   }).open();
 });
-/////////////////////////////////
+
 function tocar1(index){
   var puntos = 0;
   var array;
@@ -148,32 +91,16 @@ function tocar1(index){
       array[dado-1] = puntos;
       $$("#"+ident).text(puntos);
   }
-  else if(index == 5){
-      array[dado-1] = puntos;
-      $$("#"+ident).text("X");
-  }
+  else if(index == 5) tachar();
   sumar();
 }
 //////////////////////////////////BOTONES JUEGOS
 $$('.open-vertical2').on('click', function () {
   app.dialog.create({
     title: '¿Armada o servida?',
-  buttons: [
-    {
-      text: 'Armada',
-    },
-    {
-      text: 'Servida',
-    },
-    {
-      text: 'Tachar',
-    },
-    {
-      text: 'Cancelar',
-    },
-  ],
-  onClick: function(dialog, index) { tocar2(index) },
-  verticalButtons: true,
+    buttons: [{text: 'Armada',},{text: 'Servida',},{text: 'Tachar',},{text: 'Cancelar',},],
+    onClick: function(dialog, index) { tocar2(index) },
+    verticalButtons: true,
   }).open();
 });
 /////////////////////////////////
@@ -185,10 +112,28 @@ $$('.open-vertical2').on('click', function () {
     if (index != 2 && index != 3) asignarValor(dado, serv);
     sumar();
   }
-/////////////////////////////////
+
 function ganarGenerala(){
   if (jugador == 1) alert("GANÓ 1");
   if (jugador == 2) alert("GANÓ 2");
+}
+
+function asignarValor(v, k){
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  switch (v) {
+    case 7: array[6] = 20 + k; $$("#"+ident).text(20+k); break; //escalera
+    case 8:
+      array[7] = 30 + k; $$("#"+ident).text(30+k); break; //full
+    case 9:
+      array[8] = 40 + k; $$("#"+ident).text(40+k); break; //poker
+    case 10:
+      array[9] = 50; $$("#"+ident).text(50); break; //generala
+    case 11:
+      array[10] = 100; $$("#"+ident).text(100); break; //doble generala
+    default:
+  }
 }
 /////////////////////////////////
 function tachar(){
@@ -199,36 +144,6 @@ function tachar(){
   $$("#"+ident).text("X");
 }
 
-/////////////////////////////////
-function asignarValor(v, k){
-  var array;
-  if (jugador == 1) array = valores1;
-  if (jugador == 2) array = valores2;
-  switch (v) {
-    case 7: //escalera
-      array[6] = 20 + k;
-      $$("#"+ident).text(20+k);
-      break;
-    case 8://full
-      array[7] = 30 + k;
-      $$("#"+ident).text(30+k);
-      break;
-    case 9://poker
-      array[8] = 40 + k;
-      $$("#"+ident).text(40+k);
-      break;
-    case 10://generala
-      array[9] = 50;
-      $$("#"+ident).text(50);
-      break;
-    case 11://doble generala
-      array[10] = 100;
-      $$("#"+ident).text(100);
-      break;
-    default:
-  }
-}
-/////////////////////////////////
 function sumar(){
   total1 = 0;
   total2 = 0;
