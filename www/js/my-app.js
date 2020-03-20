@@ -62,39 +62,45 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
     $$('#jug2').text(nomjug2);
     game="";
     puntos=0;
-    tot=0;
+    tot1=[];
+    tot2=[];
+    jug=0;
+    posicion=0;
+    resultado1=0;
+    resultado2=0;
 
 ///////////////////////////////// onclick de asignacion dados
 
-$$('#j1_1').on('click', function () {asignar(1, 1);});
-$$('#j1_2').on('click', function () {asignar(1, 2);});
-$$('#j1_3').on('click', function () {asignar(1, 3);});
-$$('#j1_4').on('click', function () {asignar(1, 4);});
-$$('#j1_5').on('click', function () {asignar(1, 5);});
-$$('#j1_6').on('click', function () {asignar(1, 6);});
-$$('#j1_7').on('click', function () {game="escalera"; asignar(1,7)});
-$$('#j1_8').on('click', function () {game="full"; asignar(1,8)});
-$$('#j1_9').on('click', function () {game="poker"; asignar(1,9)});
-$$('#j1_10').on('click', function () {asignar(1,10)});
-$$('#j1_11').on('click', function () {asignar(1,11)});
+$$('#j1_1').on('click', function () {asignar(1, 1);jug=1});
+$$('#j1_2').on('click', function () {asignar(1, 2);jug=1});
+$$('#j1_3').on('click', function () {asignar(1, 3);jug=1});
+$$('#j1_4').on('click', function () {asignar(1, 4);jug=1});
+$$('#j1_5').on('click', function () {asignar(1, 5);jug=1});
+$$('#j1_6').on('click', function () {asignar(1, 6);jug=1});
+$$('#j1_7').on('click', function () {game="escalera"; asignar(1,7);jug=1});
+$$('#j1_8').on('click', function () {game="full"; asignar(1,8);jug=1});
+$$('#j1_9').on('click', function () {game="poker"; asignar(1,9);jug=1});
+$$('#j1_10').on('click', function () {asignar(1,10);jug=1});
+$$('#j1_11').on('click', function () {asignar(1,11);jug=1});
 
 
-$$('#j2_1').on('click', function () {asignar(2, 1);});
-$$('#j2_2').on('click', function () {asignar(2, 2);});
-$$('#j2_3').on('click', function () {asignar(2, 3);});
-$$('#j2_4').on('click', function () {asignar(2, 4);});
-$$('#j2_5').on('click', function () {asignar(2, 5);});
-$$('#j2_6').on('click', function () {asignar(2, 6);});
-$$('#j2_7').on('click', function () {game="escalera"; asignar(2,7)});
-$$('#j2_8').on('click', function () {game="full"; asignar(2,8)});
-$$('#j2_9').on('click', function () {game="poker"; asignar(2,9)});
-$$('#j2_10').on('click', function () {asignar(2,10)});
-$$('#j2_11').on('click', function () {asignar(2,11)});
+$$('#j2_1').on('click', function () {asignar(2, 1);jug=2});
+$$('#j2_2').on('click', function () {asignar(2, 2);jug=2});
+$$('#j2_3').on('click', function () {asignar(2, 3);jug=2});
+$$('#j2_4').on('click', function () {asignar(2, 4);jug=2});
+$$('#j2_5').on('click', function () {asignar(2, 5);jug=2});
+$$('#j2_6').on('click', function () {asignar(2, 6);jug=2});
+$$('#j2_7').on('click', function () {game="escalera"; asignar(2,7);jug=2});
+$$('#j2_8').on('click', function () {game="full"; asignar(2,8);jug=2});
+$$('#j2_9').on('click', function () {game="poker"; asignar(2,9);jug=2});
+$$('#j2_10').on('click', function () {asignar(2,10);jug=2});
+$$('#j2_11').on('click', function () {asignar(2,11);jug=2});
 
 
 function asignar(i, j){
   ident = "j"+i+"_"+j;
   dado = j;
+  posicion=j-1;
 };
 
 /////////////////////////////////
@@ -199,13 +205,17 @@ $$('.open-vertical4').on('click', function () {
 function tocar1(iden, index){
     console.log(ident + " / "+  index);
     if(index < 5){
-        puntos=(index+1)*dado
+        puntos=(index+1)*dado;
+        tot1[posicion]=puntos;
+        total()
         $$("#"+ident).text(puntos);
-        total();
     }
     else if(index == 5){
-      puntos=0;
+        puntos=0;
+        tot1[posicion]=puntos;
         $$("#"+ident).text("X");
+        total()
+        total(index,puntos);
     }
   }
 /////////////////////////////////
@@ -214,18 +224,21 @@ function tocar2(iden, index){
   console.log(game)
   if(game=="escalera"){
     if(index==0){
+      posicion=6;
       puntos=20;
       $$("#"+ident).text(20);
       total();
     }
     else{
       if(index==1){
+        posicion=6;
         puntos=25;
         $$("#"+ident).text(25);
         total();
       }
       else{
         if(index==2){
+          posicion=6;
           puntos=0;
           $$("#"+ident).text("X");
         }
@@ -233,6 +246,7 @@ function tocar2(iden, index){
     }
   } else{
     if(game=="full"){
+      posicion=7;
       if(index==0){
         puntos=25;
         $$("#"+ident).text(25);
@@ -240,12 +254,14 @@ function tocar2(iden, index){
       }
       else{
         if(index==1){
+          posicion=7;
           puntos=30;
           $$("#"+ident).text(30);
           total();
         }
         else{
           if(index==2){
+            posicion=7;
             puntos=0;
             $$("#"+ident).text("X");
           }
@@ -253,6 +269,7 @@ function tocar2(iden, index){
       }
     } else{
       if(game=="poker"){
+        posicion=8;
         if(index==0){
           puntos=40;
           $$("#"+ident).text(40);
@@ -260,12 +277,14 @@ function tocar2(iden, index){
         }
         else{
           if(index==1){
+            posicion=8;
             puntos=45;
             $$("#"+ident).text(45);
             total();
           }
           else{
             if(index==2){
+              posicion=8;
               puntos=0;
               $$("#"+ident).text("X");
             }
@@ -278,16 +297,20 @@ function tocar2(iden, index){
 /////////////////////////////////
 function tocar3(iden, index){
   if(index==0){
+    posicion=9;
     puntos=50;
     $$("#"+ident).text(50);
     total();
   } else{
     if(index==1){
+      posicion=9;
       tot="GG";
       $$("#"+ident).text("GG");
       total();
     } else{
       if(index==2){
+        posicion=9;
+        puntos=0;
         $$("#"+ident).text("X");
       } 
     }
@@ -296,11 +319,14 @@ function tocar3(iden, index){
 /////////////////////////////////
 function tocar4(iden, index){
   if(index==0){
+    posicion=10;
     puntos=60;
     $$("#"+ident).text(60);
     total();
   }else{
     if(index==1){
+      posicion=10;
+      puntos=0;
       $$("#"+ident).text("X");
     }
   }
@@ -319,17 +345,12 @@ function tocar4(iden, index){
       $$('#t2').text("0");
     })
 
-    //function sumar1(n){
-    //  total1 += n;
-    //  $$('#t1').text(total1);
-    //}
-    //function sumar2(n){
-    //  total2 += n;
-    //  $$('#t2').text(total2);
-    //}
 /////////////////////////////////
 function total(){
-  tot=tot+puntos
-  $$('#t1').text(tot);
+  resultado1=0;
+  for(var i=0;i<=tot1.length;i++){
+    resultado1=resultado1+parseInt(tot1[i]);
+  }
+  $$('#t1').text(resultado1);
 }
 })
