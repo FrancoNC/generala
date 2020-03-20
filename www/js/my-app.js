@@ -31,14 +31,21 @@ var mainView = app.views.create('.view-main');
 
 var nomJug1 = "";
 var nomJug2 = "";
+var valores1 = [0,0,0,0,0,0,0,0,0,0,0];
+var valores2 = [0,0,0,0,0,0,0,0,0,0,0];
+var juegos = [0]
 var total1 = 0;
 var total2 = 0;
 var ident = "";
 var dado = 0;
+var jugador = 0;
+
+
+
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
-
 
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
@@ -60,54 +67,44 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
     console.log(e);
     $$('#jug1').text(nomjug1);
     $$('#jug2').text(nomjug2);
-    game="";
-    puntos=0;
-    tot1=[];
-    tot2=[];
-    jug=0;
-    posicion=0;
-    resultado1=0;
-    resultado2=0;
 
 ///////////////////////////////// onclick de asignacion dados
 
-$$('#j1_1').on('click', function () {asignar(1, 1);jug=1});
-$$('#j1_2').on('click', function () {asignar(1, 2);jug=1});
-$$('#j1_3').on('click', function () {asignar(1, 3);jug=1});
-$$('#j1_4').on('click', function () {asignar(1, 4);jug=1});
-$$('#j1_5').on('click', function () {asignar(1, 5);jug=1});
-$$('#j1_6').on('click', function () {asignar(1, 6);jug=1});
-$$('#j1_7').on('click', function () {game="escalera"; asignar(1,7);jug=1});
-$$('#j1_8').on('click', function () {game="full"; asignar(1,8);jug=1});
-$$('#j1_9').on('click', function () {game="poker"; asignar(1,9);jug=1});
-$$('#j1_10').on('click', function () {asignar(1,10);jug=1});
-$$('#j1_11').on('click', function () {asignar(1,11);jug=1});
+$$('#j1_1').on('click', function () {asignar(1, 1);});
+$$('#j1_2').on('click', function () {asignar(1, 2);});
+$$('#j1_3').on('click', function () {asignar(1, 3);});
+$$('#j1_4').on('click', function () {asignar(1, 4);});
+$$('#j1_5').on('click', function () {asignar(1, 5);});
+$$('#j1_6').on('click', function () {asignar(1, 6);});
+$$('#j1_7').on('click', function () {asignar(1, 7);});
+$$('#j1_8').on('click', function () {asignar(1, 8);});
+$$('#j1_9').on('click', function () {asignar(1, 9);});
+$$('#j1_10').on('click', function () {asignar(1,10);});
+$$('#j1_11').on('click', function () {asignar(1,11);});
 
-
-$$('#j2_1').on('click', function () {asignar(2, 1);jug=2});
-$$('#j2_2').on('click', function () {asignar(2, 2);jug=2});
-$$('#j2_3').on('click', function () {asignar(2, 3);jug=2});
-$$('#j2_4').on('click', function () {asignar(2, 4);jug=2});
-$$('#j2_5').on('click', function () {asignar(2, 5);jug=2});
-$$('#j2_6').on('click', function () {asignar(2, 6);jug=2});
-$$('#j2_7').on('click', function () {game="escalera"; asignar(2,7);jug=2});
-$$('#j2_8').on('click', function () {game="full"; asignar(2,8);jug=2});
-$$('#j2_9').on('click', function () {game="poker"; asignar(2,9);jug=2});
-$$('#j2_10').on('click', function () {asignar(2,10);jug=2});
-$$('#j2_11').on('click', function () {asignar(2,11);jug=2});
+$$('#j2_1').on('click', function () {asignar(2, 1);});
+$$('#j2_2').on('click', function () {asignar(2, 2);});
+$$('#j2_3').on('click', function () {asignar(2, 3);});
+$$('#j2_4').on('click', function () {asignar(2, 4);});
+$$('#j2_5').on('click', function () {asignar(2, 5);});
+$$('#j2_6').on('click', function () {asignar(2, 6);});
+$$('#j2_7').on('click', function () {asignar(2, 7);});
+$$('#j2_8').on('click', function () {asignar(2, 8);});
+$$('#j2_9').on('click', function () {asignar(2, 9);});
+$$('#j2_10').on('click', function () {asignar(2,10);});
+$$('#j2_11').on('click', function () {asignar(2,11);});
 
 
 function asignar(i, j){
-  ident = "j"+i+"_"+j;
+  jugador = i;
   dado = j;
-  posicion=j-1;
+  ident = "j"+i+"_"+j;
 };
 
-/////////////////////////////////
+/////////////////////////////////BOTONES DADOS
 $$('.open-vertical1').on('click', function () {
   app.dialog.create({
     title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
   buttons: [
     {
       text: '1 dado',
@@ -131,15 +128,30 @@ $$('.open-vertical1').on('click', function () {
       text: 'Cancelar',
     },
   ],
-  onClick: function(dialog, index) { tocar1("", index) },
+  onClick: function(dialog, index) { tocar1(index) },
   verticalButtons: true,
   }).open();
 });
-//----------------------------------------------//
+/////////////////////////////////
+function tocar1(index){
+  var puntos = 0;
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  if(index < 5){
+      puntos = (index+1)*dado;
+      array[dado-1] = puntos;
+      $$("#"+ident).text(puntos);
+  }
+  else if(index == 5){
+      array[dado-1] = puntos;
+      $$("#"+ident).text("X");
+  }
+}
+//////////////////////////////////BOTONES JUEGOS
 $$('.open-vertical2').on('click', function () {
   app.dialog.create({
-    title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
+    title: '¿Armada o servida?',
   buttons: [
     {
       text: 'Armada',
@@ -154,186 +166,58 @@ $$('.open-vertical2').on('click', function () {
       text: 'Cancelar',
     },
   ],
-  onClick: function(dialog, index) { tocar2("", index) },
-  verticalButtons: true,
-  }).open();
-});
-//----------------------------------------------//
-$$('.open-vertical3').on('click', function () {
-  app.dialog.create({
-    title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
-  buttons: [
-    {
-      text: 'Generala',
-    },
-    {
-      text: 'Servida',
-    },
-    {
-      text: 'Tachar',
-    },
-    {
-      text: 'Cancelar',
-    },
-  ],
-  onClick: function(dialog, index) { tocar3("", index) },
-  verticalButtons: true,
-  }).open();
-});
-//----------------------------------------------//
-$$('.open-vertical4').on('click', function () {
-  app.dialog.create({
-    title: 'Cantidad de dados',
-    //text: 'Dialog with vertical buttons',
-  buttons: [
-    {
-      text: 'Generala Doble',
-    },
-    {
-      text: 'Tachar',
-    },
-    {
-      text: 'Cancelar',
-    },
-  ],
-  onClick: function(dialog, index) { tocar4("", index) },
+  onClick: function(dialog, index) { tocar2(index) },
   verticalButtons: true,
   }).open();
 });
 /////////////////////////////////
-function tocar1(iden, index){
-    console.log(ident + " / "+  index);
-    if(index < 5){
-        puntos=(index+1)*dado;
-        tot1[posicion]=puntos;
-        total()
-        $$("#"+ident).text(puntos);
-    }
-    else if(index == 5){
-        puntos=0;
-        tot1[posicion]=puntos;
-        $$("#"+ident).text("X");
-        total()
-    }
+  function tocar2(index){
+    var serv = 0;
+    if (index == 1) serv = 5;
+    if (index == 1 && dado == 10) ganarGenerala();
+    if (index != 2 && index != 3) asignarValor(dado, serv);
   }
 /////////////////////////////////
-function tocar2(iden, index){
-  console.log(ident + " / "+  index);
-  console.log(game)
-  if(game=="escalera"){
-    if(index==0){
-      puntos=20;
-      tot1[posicion]=puntos;
-      $$("#"+ident).text(20);
-      total();
-    }
-    else{
-      if(index==1){
-        puntos=25;
-        tot1[posicion]=puntos;
-        $$("#"+ident).text(25);
-        total();
-      }
-      else{
-        if(index==2){
-          puntos=0;
-          tot1[posicion]=puntos;
-          $$("#"+ident).text("X");
-        }
-      }
-    }
-  } else{
-    if(game=="full"){
-      if(index==0){
-        puntos=25;
-        tot1[posicion]=puntos;
-        $$("#"+ident).text(25);
-        total();
-      }
-      else{
-        if(index==1){
-          puntos=30;
-          tot1[posicion]=puntos;
-          $$("#"+ident).text(30);
-          total();
-        }
-        else{
-          if(index==2){
-            puntos=0;
-            tot1[posicion]=puntos;
-            $$("#"+ident).text("X");
-          }
-        }
-      }
-    } else{
-      if(game=="poker"){
-        if(index==0){
-          puntos=40;
-          tot1[posicion]=puntos;
-          $$("#"+ident).text(40);
-          total();
-        }
-        else{
-          if(index==1){
-            puntos=45;
-            tot1[posicion]=puntos;
-            $$("#"+ident).text(45);
-            total();
-          }
-          else{
-            if(index==2){
-              puntos=0;
-              tot1[posicion]=puntos;
-              $$("#"+ident).text("X");
-            }
-          }
-        }
-      }
-    }
+function ganarGenerala(){
+  if (jugador == 1) alert("GANÓ 1");
+  if (jugador == 2) alert("GANÓ 2");
+}
+
+/////////////////////////////////
+function asignarValor(v, k){
+  var array;
+  if (jugador == 1) array = valores1;
+  if (jugador == 2) array = valores2;
+  switch (v) {
+    case 7: //escalera
+      array[6] = 20 + k;
+      $$("#"+ident).text(20+k);
+      break;
+    case 8://full
+      array[7] = 30 + k;
+      $$("#"+ident).text(30+k);
+      break;
+    case 9://poker
+      array[8] = 40 + k;
+      $$("#"+ident).text(40+k);
+      break;
+    case 10://generala
+      array[9] = 50;
+      $$("#"+ident).text(50);
+      break;
+    case 11://doble generala
+      array[10] = 100;
+      $$("#"+ident).text(100);
+      break;
+    default:
   }
 }
 /////////////////////////////////
-function tocar3(iden, index){
-  if(index==0){
-    puntos=50;
-    tot1[posicion]=puntos;
-    $$("#"+ident).text(50);
-    total();
-  } else{
-    if(index==1){
-      tot="GG";
-      $$("#"+ident).text("GG");
-      total();
-    } else{
-      if(index==2){
-        puntos=0;
-        tot1[posicion]=puntos;
-        $$("#"+ident).text("X");
-      } 
-    }
-  }
-}
-/////////////////////////////////
-function tocar4(iden, index){
-  if(index==0){
-    puntos=60;
-    tot1[posicion]=puntos;
-    $$("#"+ident).text(60);
-    total();
-  }else{
-    if(index==1){
-      puntos=0;
-      tot1[posicion]=puntos;
-      $$("#"+ident).text("X");
-    }
-  }
-}
+
+
+/*
 /////////////////////////////////
     $$('#limpiar').on('click', function () {
-      game="";
-      puntos=0
-      tot=0;
       for(var j = 1; j < 3; j++){
         for (var i = 1; i < 12; i++) {
           $$("#j"+j+"_"+i).text("-");
@@ -341,32 +225,32 @@ function tocar4(iden, index){
       }
       $$('#t1').text("0");
       $$('#t2').text("0");
-      resultado1=0;
-      resultado2=0;
-      tot1=[];
-      tot2=[];
     })
 
-/////////////////////////////////
-function total(){
-  if(jug==1){
-    resultado1=0;
-    for(var i=0;i<tot1.length;i++){
-      if(tot1[i]>=0){
-        resultado1=resultado1+parseInt(tot1[i]);
-      }
+    function sumar1(n){
+      total1 += n;
+      $$('#t1').text(total1);
     }
-    $$('#t1').text(resultado1);
-  } else {
-    if(jug==2){
-      resultado2=0;
-      for(var i=0;i<tot2.length;i++){
-        if(tot1[i]>=0){
-          resultado2=resultado2+parseInt(tot2[i]);
+    function sumar2(n){
+      total2 += n;
+      $$('#t2').text(total2);
+    }
+/////////////////////////////////
+
+/////////////////////////////////
+/*
+    $$('#volver').on('click', function () {
+      nomjug1 = "";
+      nomjug2 = "";
+      $$('#j1').val("");
+      $$('#j2').val("");
+      for(var j = 0; j < 2; j++){
+        for (var i = 0; i < ; i++) {
+          $$('#'+j+i).text("-");
         }
       }
-      $$('#t2').text(resultado2);
-    }
-  }
-}
+    })
+*/
+/////////////////////////////////
+
 })
