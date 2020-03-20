@@ -17,8 +17,6 @@ var app = new Framework7({
 });
 var mainView = app.views.create('.view-main');
 ///////////////////////VARIABLES GLOBALES:
-var nomJug1 = "";
-var nomJug2 = "";
 var valores1 = [0,0,0,0,0,0,0,0,0,0,0];
 var valores2 = [0,0,0,0,0,0,0,0,0,0,0];
 var total1 = 0;
@@ -28,6 +26,8 @@ var dado = 0;
 var jugador = 0;
 /////////////////////////////////////////
 $$(document).on('deviceready', function() {
+  var nomJug1 = "";
+  var nomJug2 = "";
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
       nomjug2 = $$('#j2').val();
@@ -42,6 +42,7 @@ $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
     $$('#jug1').text(nomjug1);
     $$('#jug2').text(nomjug2);
 ///////////////////////////////// onclick de asignacion de ubicacion:
+{
 $$('#j1_1').on('click', function () {asignar(1, 1);});
 $$('#j1_2').on('click', function () {asignar(1, 2);});
 $$('#j1_3').on('click', function () {asignar(1, 3);});
@@ -65,7 +66,8 @@ $$('#j2_8').on('click', function () {asignar(2, 8);});
 $$('#j2_9').on('click', function () {asignar(2, 9);});
 $$('#j2_10').on('click', function () {asignar(2,10);});
 $$('#j2_11').on('click', function () {asignar(2,11);});
-//////////////////////////////////////////////////////////////////
+}//ABRIR PARA VER LOS ONCLICK
+
 function asignar(i, j){
   jugador = i;
   dado = j;
@@ -93,6 +95,7 @@ function tocar1(index){
   }
   else if(index == 5) tachar();
   sumar();
+  comprobarGanador();
 }
 //////////////////////////////////BOTONES JUEGOS
 $$('.open-vertical2').on('click', function () {
@@ -103,7 +106,7 @@ $$('.open-vertical2').on('click', function () {
     verticalButtons: true,
   }).open();
 });
-/////////////////////////////////
+
   function tocar2(index){
     var serv = 0;
     if (index == 2) tachar();
@@ -111,86 +114,79 @@ $$('.open-vertical2').on('click', function () {
     if (index == 1 && dado == 10) ganarGenerala();
     if (index != 2 && index != 3) asignarValor(dado, serv);
     sumar();
+    comprobarGanador();
   }
 
-function ganarGenerala(){
-  if (jugador == 1) alert("GANÓ 1");
-  if (jugador == 2) alert("GANÓ 2");
-}
-
-function asignarValor(v, k){
-  var array;
-  if (jugador == 1) array = valores1;
-  if (jugador == 2) array = valores2;
-  switch (v) {
-    case 7: array[6] = 20 + k; $$("#"+ident).text(20+k); break; //escalera
-    case 8:
-      array[7] = 30 + k; $$("#"+ident).text(30+k); break; //full
-    case 9:
-      array[8] = 40 + k; $$("#"+ident).text(40+k); break; //poker
-    case 10:
-      array[9] = 50; $$("#"+ident).text(50); break; //generala
-    case 11:
-      array[10] = 100; $$("#"+ident).text(100); break; //doble generala
-    default:
+  function ganarGenerala(){
+    if (jugador == 1) alert("GANÓ"+ $$('#jug1').val());
+    if (jugador == 2) alert("GANÓ"+ $$('#jug2').val());
   }
-}
+
+  function asignarValor(v, k){
+    var array;
+    if (jugador == 1) array = valores1;
+    if (jugador == 2) array = valores2;
+    switch (v) {
+      case 7: array[6] = 20 + k; $$("#"+ident).text(20+k); break; //escalera
+      case 8:
+        array[7] = 30 + k; $$("#"+ident).text(30+k); break; //full
+      case 9:
+        array[8] = 40 + k; $$("#"+ident).text(40+k); break; //poker
+      case 10:
+        array[9] = 50; $$("#"+ident).text(50); break; //generala
+      case 11:
+        array[10] = 100; $$("#"+ident).text(100); break; //doble generala
+      default:
+    }
+  }
 /////////////////////////////////
-function tachar(){
+  function tachar(){
   var array;
   if (jugador == 1) array = valores1;
   if (jugador == 2) array = valores2;
-  array[dado-1] = 0;
+  array[dado-1] = "X";
   $$("#"+ident).text("X");
-}
-
-function sumar(){
+  }
+  function sumar(){
   total1 = 0;
   total2 = 0;
   for (var i = 0; i < 11; i++) {
-    total1 += valores1[i];
-    total2 += valores2[i];
+    if(valores1[i] != "X") total1 += valores1[i];
+    if(valores2[i] != "X") total2 += valores2[i];
   }
   $$("#t1").text(total1);
   $$("#t2").text(total2);
-}
-
-/*
-/////////////////////////////////
-    $$('#limpiar').on('click', function () {
-      for(var j = 1; j < 3; j++){
-        for (var i = 1; i < 12; i++) {
-          $$("#j"+j+"_"+i).text("-");
-        };
-      }
-      $$('#t1').text("0");
-      $$('#t2').text("0");
-    })
-
-    function sumar1(n){
-      total1 += n;
-      $$('#t1').text(total1);
+  }
+  function comprobarGanador() {
+    var n = 0;
+    var m = 0;
+    var i = 0;
+    while(i < 11){
+      if(valores1[i] != 0) n++;
+      if(valores2[i] != 0) m++;
+      i++;
     }
-    function sumar2(n){
-      total2 += n;
-      $$('#t2').text(total2);
+    if (n == 11 && m == 11) {
+      total1 > total2 ? alert("GANÓ"+$$('#jug1').val()) : alert("GANÓ"+$$('#jug2').val());
     }
+  }
+/////////////////////////////////BOTON LIMPIAR:
+ $$('#limpiar').on('click', function () {
+    for(var j = 1; j < 3; j++){
+      for (var i = 1; i < 12; i++) {
+        $$("#j"+j+"_"+i).text("-");
+      };
+    }
+    for (var i = 0; i < 11; i++) {
+      valores1[i] = 0;
+      valores2[i] = 0;
+    }
+    total1 = 0;
+    total2 = 0;
+    $$('#t1').text("0");
+    $$('#t2').text("0");
+  })
 /////////////////////////////////
 
-/////////////////////////////////
-/*
-    $$('#volver').on('click', function () {
-      nomjug1 = "";
-      nomjug2 = "";
-      $$('#j1').val("");
-      $$('#j2').val("");
-      for(var j = 0; j < 2; j++){
-        for (var i = 0; i < ; i++) {
-          $$('#'+j+i).text("-");
-        }
-      }
-    })
-*/
-/////////////////////////////////
 
-})
+}) //CIERRA DOCUMENT ANOTADOR
