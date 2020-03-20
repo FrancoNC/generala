@@ -1,6 +1,6 @@
 # Framework 7 Template - Version 5.5.0
 
-## Framework7 
+## Probando que todo funcione ok 
 
 Framework7 app created with following options:
 
