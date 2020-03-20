@@ -2,6 +2,8 @@
 
 ## Probando que todo funcione ok 
 
+### El readme de la rama Pedro
+
 Framework7 app created with following options:
 
 ```
