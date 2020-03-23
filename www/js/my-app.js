@@ -122,8 +122,8 @@ $$('.open-vertical2').on('click', function () {
   }
 
   function ganarGenerala(){
-    if (jugador == 1) app.dialog.alert("Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
-    if (jugador == 2) app.dialog.alert("Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug2 + "</font>");
+    if (jugador == 1) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
+    if (jugador == 2) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug2 + "</font>");
   }
 
   function asignarValor(v, k){
@@ -172,7 +172,7 @@ $$('.open-vertical2').on('click', function () {
       i++;
     }
     if (n == 11 && m == 11) {
-      total1 > total2 ?  app.dialog.alert("Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>") : app.dialog.alert("Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
+      total1 > total2 ?  app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>") : app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
     }
   }
 
