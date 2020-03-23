@@ -24,10 +24,13 @@ var total2 = 0;
 var ident = "";
 var dado = 0;
 var jugador = 0;
+
+var nomJug1 = "";   //Jorge
+var nomJug2 = "";   //Jorge
 /////////////////////////////////////////
 $$(document).on('deviceready', function() {
-  var nomJug1 = "";
-  var nomJug2 = "";
+  // var nomJug1 = ""; //Jorge
+  // var nomJug2 = ""; //Jorge
     $$('#inicio').on('click',function () {
       nomjug1 = $$('#j1').val();
       nomjug2 = $$('#j2').val();
