@@ -25,8 +25,8 @@ var ident = "";
 var dado = 0;
 var jugador = 0;
 
-var nomJug1 = "";   //Jorge
-var nomJug2 = "";   //Jorge
+var nomjug1 = "";   //Jorge
+var nomjug2 = "";   //Jorge
 /////////////////////////////////////////
 $$(document).on('deviceready', function() {
   // var nomJug1 = ""; //Jorge
