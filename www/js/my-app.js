@@ -80,7 +80,7 @@ function asignar(i, j){
 $$('.open-vertical1').on('click', function () {
   app.dialog.create({
     title: 'Cantidad de dados',
-    buttons: [{text: '1 dado',},{text: '2 dados',},{text: '3 dados',},{text: '4 dados',},{text: '5 dados',},{text: 'tachar',},{text: 'Cancelar',},],
+    buttons: [{text: '1 dado',},{text: '2 dados',},{text: '3 dados',},{text: '4 dados',},{text: '5 dados',},{text: 'Tachar',},{text: 'Cancelar',},],
     onClick: function(dialog, index) { tocar1(index) },
     verticalButtons: true,
   }).open();
@@ -172,7 +172,7 @@ $$('.open-vertical2').on('click', function () {
       i++;
     }
     if (n == 11 && m == 11) {
-      total1 > total2 ?  app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>") : app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
+      total1 > total2 ?  app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>") : app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug2 + "</font>");
     }
   }
 
