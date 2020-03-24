@@ -29,6 +29,7 @@ var nomJug2 = "";
 /////////////////////////////////////////
 $$(document).on('deviceready', function() {
 
+
     $$('#inicio').on('click',function () {
       nomJug1 = $$('#j1').val();
       nomJug2 = $$('#j2').val();
