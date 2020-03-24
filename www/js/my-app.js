@@ -24,23 +24,28 @@ var total2 = 0;
 var ident = "";
 var dado = 0;
 var jugador = 0;
+var nomJug1 = "";
+var nomJug2 = "";
 /////////////////////////////////////////
 $$(document).on('deviceready', function() {
-  var nomJug1 = "";
-  var nomJug2 = "";
+
     $$('#inicio').on('click',function () {
-      nomjug1 = $$('#j1').val();
-      nomjug2 = $$('#j2').val();
+      nomJug1 = $$('#j1').val();
+      nomJug2 = $$('#j2').val();
       for (var i = 0; i < 11; i++) {
         valores1[i] = 0;
         valores2[i] = 0;
       }
+      console.log(nomJug1+" "+nomJug2)
     })
 });
+
 /////////////////////////////////////////
 $$(document).on('page:init', '.page[data-name="anotador"]', function (e) {
-    $$('#jug1').text(nomjug1);
-    $$('#jug2').text(nomjug2);
+    nomJug1=$$("#j1").val();
+    nomJug2=$$("#j2").val();
+    $$('#jug1').text(nomJug1);
+    $$('#jug2').text(nomJug2);
 
 ///////////////////////////////// onclick de asignacion de ubicacion:
 {
@@ -122,8 +127,8 @@ $$('.open-vertical2').on('click', function () {
   }
 
   function ganarGenerala(){
-    if (jugador == 1) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>");
-    if (jugador == 2) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug2 + "</font>");
+    if (jugador == 1) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomJug1 + "</font>");
+    if (jugador == 2) app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomJug2 + "</font>");
   }
 
   function asignarValor(v, k){
@@ -172,7 +177,7 @@ $$('.open-vertical2').on('click', function () {
       i++;
     }
     if (n == 11 && m == 11) {
-      total1 > total2 ?  app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug1 + "</font>") : app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomjug2 + "</font>");
+      total1 > total2 ?  app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomJug1 + "</font>") : app.dialog.alert("¡Felicitaciones!" ,"GANÓ"+" " + "<font style='text-transform: uppercase;''>" +nomJug2 + "</font>");
     }
   }
 
@@ -197,4 +202,3 @@ $$('.open-vertical2').on('click', function () {
 
 
 }) //CIERRA DOCUMENT ANOTADOR
-
